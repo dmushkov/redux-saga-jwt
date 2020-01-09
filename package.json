@@ -1,5 +1,5 @@
 {
-    "name": "redux-saga-jwt",
+    "name": "redux-saga-jwt-auth",
     "version": "1.0.5-beta.0",
     "description": "Token management for single page application",
     "main": "./dist/index.js",
