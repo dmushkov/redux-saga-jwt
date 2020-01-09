@@ -1,5 +1,5 @@
 import { IJWTConfig, IJWTState } from "./interface";
-import { SET, REMOVE, createActionCreators } from "./actions";
+import {SET, REMOVE, createActionCreators} from "./actions";
 import { spawn, all, race, take, select, call, put, takeEvery, delay } from "redux-saga/effects";
 import { isTokenExpired } from "./utils";
 
@@ -46,9 +46,9 @@ export const checkExpiredWhenInitialize = (configs: IJWTConfig<any>) => function
     const expiredTokenIds = Object.keys(tokens).filter(
         id => isTokenExpired(tokens[id]),
     );
-
     if (!expiredTokenIds.length) {
-        return;
+        const restoredTokenIds = Object.keys(tokens);
+        yield all( restoredTokenIds.map( id => put(createActionCreators(id).set(tokens[id]))));
     }
     yield all(expiredTokenIds.map(id => put(createActionCreators(id).expired())));
 };
